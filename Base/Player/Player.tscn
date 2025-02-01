@@ -4,14 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://bg2uoob4fej1n" path="res://icon.svg" id="2_0pjot"]
 [ext_resource type="Resource" uid="uid://bmm2jgd48hwvy" path="res://Base/Player/player_settings.tres" id="3_5fn66"]
 [ext_resource type="Script" path="res://Base/Player/PlayerCamera.cs" id="3_klhor"]
-[ext_resource type="PackedScene" uid="uid://dpsinhobss2f7" path="res://Base/Components/HealthComponent.tscn" id="5_iaqmi"]
-[ext_resource type="Script" path="res://Dev/Templates/HitBox.cs" id="6_vdj1h"]
+[ext_resource type="PackedScene" uid="uid://dpsinhobss2f7" path="res://Base/Components/HealthComponent/HealthComponent.tscn" id="5_iaqmi"]
+[ext_resource type="PackedScene" uid="uid://dpxbxkef60m1b" path="res://Base/Components/HitboxComponent/HitBoxComponent.tscn" id="6_g6ofp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x1n7d"]
 radius = 7.61577
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n2l77"]
-size = Vector2(18, 18)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8u11r"]
+size = Vector2(16, 16)
 
 [node name="Player" type="CharacterBody2D" groups=["HasHealth", "Player"]]
 collision_layer = 2
@@ -34,18 +34,15 @@ startZoom = 1.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_x1n7d")
 
-[node name="HitBox" type="Area2D" parent="."]
-editor_description = "Template that should be made local in scene with editable children"
-collision_layer = 0
-collision_mask = 16
-script = ExtResource("6_vdj1h")
+[node name="HitBoxComponent" parent="." instance=ExtResource("6_g6ofp")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-shape = SubResource("RectangleShape2D_n2l77")
-debug_color = Color(0.957204, 0, 0.533834, 0.42)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
+shape = SubResource("RectangleShape2D_8u11r")
+debug_color = Color(0.956616, 0, 0.536981, 0.42)
 
-[node name="HealthComponent" parent="." instance=ExtResource("5_iaqmi")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("hitBox") instance=ExtResource("5_iaqmi")]
 position = Vector2(0, -26)
 scale = Vector2(0.5, 0.5)
-StartValue = 100.0
-MaxValue = 100.0
+startValue = 100.0
+maxValue = 100.0
+hitBox = NodePath("../HitBoxComponent")

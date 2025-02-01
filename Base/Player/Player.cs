@@ -22,7 +22,6 @@ public partial class Player : Entity
     gunScene = resource.GunScene;
     gunNode = gunScene.Instantiate<AnimatedWeapon>();
     gunNode.Scale *= 1;
-    gunNode.isUsingCursorPosition = true;
     AddChild(gunNode);
   }
 

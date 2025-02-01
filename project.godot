@@ -1,16 +1,8 @@
-; Engine configuration file.
-; It's best edited using the editor UI and not directly,
-; since the parameters that go here are not all obvious.
-;
-; Format:
-;   [section] ; section goes between []
-;   param=value ; assign values to parameters
-
 config_version=5
 
 [application]
 
-config/name="Iriska-and-Cub-50-Miles-to-the-City"
+config/name="ABC-LOCAL"
 run/main_scene="res://Base/Main/Loader.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"

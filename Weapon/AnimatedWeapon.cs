@@ -33,21 +33,69 @@ public abstract partial class AnimatedWeapon : Node2D
     public float FinalDamageMultiplier => finalDamageMultiplier;
     public float FinalSpecialDamageMultiplier => finalSpecialDamageMultiplier;
     
-    public Vector2 Direction {get; set;}
-    public bool? isUsingCursorPosition;
+    protected Vector2 direction;
+    public Vector2 Direction {get => direction; set => direction = value;}
     
+    protected Func<Vector2> CalcDirection;
+    private Vector2 calcDirection_Player(){
+        return (GetGlobalMousePosition() - muzzle.GlobalPosition).Normalized();
+    }
+    private Vector2 calcDirection_NPC(){
+        return Direction;
+    }
 
     public override void _Ready()
     {   
-        // setup
         displayedWeaponName = weaponSettings.DisplayedWeaponName;
-        flipSpriteAction = flipSprite;
+        flipSprite = flipSpriteDefault;
 
         ownerNode = GetParent<Entity>();
+        if (OwnerNode is Player){
+            CalcDirection = calcDirection_Player;
+            UpdateSpriteFlipState = UpdateSpriteFlipState_Player;
+        }
+        else if (ownerNode is NPC){
+            CalcDirection = calcDirection_NPC;
+            UpdateSpriteFlipState = UpdateSpriteFlipState_NPC;
+        }
 
         // check for nulls
         StaticExtensions.CheckPublicMembersForNull_Node<Node2D, AnimatedWeapon>(this);
         base._Ready();
+    }
+    
+    //// Shooting mechanics ////
+    public virtual void StartShooting() => isShooting = true;
+    public virtual void StopShooting() => isShooting = false;
+    //
+    protected abstract void OnShoot();
+    protected abstract void SpawnProjectile(Vector2 direction);
+    public virtual void OnSpecialMechanic(){}
+
+
+    //// Sprite control stuff ////
+    private Action<bool> flipSprite;
+    private void flipSpriteDefault(bool isFlipped) => sprite.FlipV = isFlipped;
+
+    private Action UpdateSpriteFlipState;
+    protected void UpdateSpriteFlipState_Player(){
+        if (ownerNode.GlobalPosition.X < GetGlobalMousePosition().X){
+            flipSprite(false);
+        }
+        else if (ownerNode.GlobalPosition.X > GetGlobalMousePosition().X){
+            flipSprite(true);
+        }
+        LookAt(GetGlobalMousePosition());
+    }
+
+    protected void UpdateSpriteFlipState_NPC(){
+        if ((GlobalPosition + Direction).X < GetGlobalMousePosition().X){
+            flipSprite(false);
+        }
+        else if ((GlobalPosition + Direction).X > GetGlobalMousePosition().X){
+            flipSprite(true);
+        }
+        LookAt(GlobalPosition + Direction);
     }
 
 
@@ -62,30 +110,15 @@ public abstract partial class AnimatedWeapon : Node2D
 
         timeSinceLastShot += (float)delta;
     }
-
-
-    // Shooting mechanics
-    public virtual void StartShooting() => isShooting = true;
-    public virtual void StopShooting() => isShooting = false;
-    protected abstract void OnShoot();
-    protected abstract void SpawnProjectile(Vector2 direction);
-    public virtual void OnSpecialMechanic(){}
-
-
-    // sprite control stuff
-    protected void UpdateSpriteFlipState(){
-        if (ownerNode.GlobalPosition.X < GetGlobalMousePosition().X){
-            flipSpriteAction(false);
-        }
-        else if (ownerNode.GlobalPosition.X > GetGlobalMousePosition().X){
-            flipSpriteAction(true);
-        }
-        LookAt(isUsingCursorPosition == true ? GetGlobalMousePosition() : GlobalPosition + Direction);
-    }
-    
-
-    // Почему нужно обязательно придумывать какой-то "контейнер" для функции?
-    // Разве она не будет просто универсальной для всех типов оружия?
-    private Action<bool> flipSpriteAction;
-    private void flipSprite(bool isFlipped) => sprite.FlipV = isFlipped;
 }
+
+/*
+    /// <summary>
+    /// Функция оружия на нажимаемую левую кнопку мыши (например, обычная стрельба)
+    /// </summary>
+    public abstract void OnLeftMouseButton();
+    /// <summary>
+    /// Функция оружия на нажимаемую правую кнопку мыши (например, специальная механика)
+    /// </summary>
+    public abstract void OnRightMouseButton();
+    */

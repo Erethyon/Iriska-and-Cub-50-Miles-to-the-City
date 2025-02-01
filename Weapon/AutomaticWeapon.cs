@@ -13,12 +13,12 @@ public partial class AutomaticWeapon : AnimatedWeapon
     }
 
     /// <summary>
-    /// Executes on LMB
+    /// Outdated. 
+    /// Теперь создан Func CalcDirection и функция 
+    /// SetCalcDirectionSource в части инициализации
     /// </summary>
     protected override void OnShoot(){
-        Vector2 cursorDir = (GetGlobalMousePosition() - muzzle.GlobalPosition).Normalized();
-        Vector2 receivedDir = Direction;
-        Direction = (isUsingCursorPosition == true) ? cursorDir : receivedDir;
+        direction = CalcDirection();
         SpawnProjectile(Direction);
     }
 

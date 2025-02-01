@@ -10,12 +10,12 @@ public partial class Entity : CharacterBody2D
 	[Export] protected EntitySettings resource;
 	protected NavigationAgent2D? navAgent;
 	protected HealthComponent? healthComponent;
-	protected HitBox? hitBox;
+	protected HitBoxComponent? hitBox;
 
 	public EntitySettings Resource => resource;
 	public NavigationAgent2D NavAgent => navAgent;
 	public HealthComponent HealthComponent => healthComponent;
-	public HitBox? HitBox => hitBox;
+	public HitBoxComponent? HitBoxComponent => hitBox;
 
 	public override void _Ready()
 	{
@@ -25,7 +25,7 @@ public partial class Entity : CharacterBody2D
 		try { healthComponent = GetChildren().OfType<HealthComponent>().First();}		
 		catch (System.Exception) { GD.PushWarning($"HealthComponent not found in {Name} Scene Tree");}
 				
-		try { hitBox = GetChildren().OfType<HitBox>().First(); }
+		try { hitBox = GetChildren().OfType<HitBoxComponent>().First(); }
 		catch (System.Exception) { GD.PushWarning($"hitBox not found in {Name} Scene Tree");}
 
 		if (healthComponent != null && hitBox == null){
@@ -36,14 +36,6 @@ public partial class Entity : CharacterBody2D
 	}
 
 	protected void UpdateSettingsFromResource(){
-		healthComponent.aliveEntity = this;
-    	healthComponent.hitBox = hitBox;
-		
-		// Import settings from resource
-		// Health
-		healthComponent.MaxValue = resource.HealthMaxValue;
-		healthComponent.StartValue = resource.HealthStartValue;
-		
 		// Gun
 		// ...
 

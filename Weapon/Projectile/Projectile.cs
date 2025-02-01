@@ -1,14 +1,26 @@
 using Godot;
 using System;
 
+/// <summary>
+/// Класс снаряда, который собирается и настраивается классом оружия
+/// В базовой логике не пытается никак никого атаковать, но хранит 
+/// в себе значение наносимого урона.
+/// </summary>
 public partial class Projectile : RigidBody2D
 {
 	[Export] private Node2D sprite;
 	[Export] private Timer lifetime;
 	[Export] private float _damageValue = 0.5f;
 
+	/// <summary>
+	/// Поле, "сырое" хранящее в себе значение урона, которое должно нанестись 
+	/// HealthComponent
+	/// </summary>
 	public float DamageValue {get; set; }
 
+	/// <summary>
+	/// Скорость в части кода ApplyImpulse(startVelocity) 
+	/// </summary>
     public Vector2 startVelocity {get; set;}
 
     public override void _Ready()

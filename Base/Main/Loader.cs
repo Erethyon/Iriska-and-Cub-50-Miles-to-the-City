@@ -46,7 +46,7 @@ public partial class Loader : Node
         
         //
         foreach (Node node in GetTree().GetNodesInGroup("Enemy")){
-            ((Enemy)node).DirectTargetNode = playerNode;
+            ((NPC)node).DirectTargetNode = playerNode;
             GD.Print($"Property DirectTargetNode has been set to {playerNode.Name} for {node.Name}");
         }
         StaticExtensions.CheckPublicMembersForNull_Node<Node, Loader>(this);

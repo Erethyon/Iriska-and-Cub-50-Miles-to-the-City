@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using static Constants;
 
-public partial class Zombie : Enemy
+public partial class Zombie : NPC
 {
 
   	public override void _Ready()
@@ -35,7 +35,7 @@ public partial class Zombie : Enemy
 		Velocity = direction * resource.MoveSpeed * patrolSpeed;
 	}
 
-	protected override void calcVelocityToNavigateToPlayer(){
+	protected override void calcVelocityToNavigateToTargetNode(){
 		navAgent.TargetPosition = directTargetNode.Position;
 		direction = (navAgent.GetNextPathPosition() - GlobalPosition).Normalized();
 		Velocity = direction * resource.MoveSpeed;
@@ -43,7 +43,7 @@ public partial class Zombie : Enemy
 
 	protected override void OnScreenEntered(){
 		GD.Print("OnScreenEntered");
-		calcVelocity = calcVelocityToNavigateToPlayer;
+		calcVelocity = calcVelocityToNavigateToTargetNode;
 	}
 
 	protected override void OnScreenExited(){

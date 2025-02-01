@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://Characters/Zombie/Zombie.cs" id="1_h56s0"]
 [ext_resource type="Resource" uid="uid://dssxm87ybioy3" path="res://Characters/Zombie/zombie_settings.tres" id="2_npojg"]
 [ext_resource type="Texture2D" uid="uid://bg2uoob4fej1n" path="res://icon.svg" id="3_1fnbp"]
-[ext_resource type="Script" path="res://Dev/Templates/HitBox.cs" id="4_tyw1j"]
-[ext_resource type="PackedScene" uid="uid://dpsinhobss2f7" path="res://Base/Components/HealthComponent.tscn" id="5_v786y"]
+[ext_resource type="Script" path="res://Base/Components/HitboxComponent/HitBoxComponent.cs" id="4_tyw1j"]
+[ext_resource type="PackedScene" uid="uid://dpsinhobss2f7" path="res://Base/Components/HealthComponent/HealthComponent.tscn" id="5_v786y"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2f6kw"]
 radius = 8.0
@@ -46,11 +46,12 @@ script = ExtResource("4_tyw1j")
 shape = SubResource("RectangleShape2D_6t8yu")
 debug_color = Color(0.957204, 0, 0.533834, 0.42)
 
-[node name="HealthComponent" parent="." instance=ExtResource("5_v786y")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("hitBox") instance=ExtResource("5_v786y")]
 position = Vector2(0, -18)
 scale = Vector2(0.5, 0.5)
-StartValue = 100.0
-MaxValue = 100.0
+startValue = 100.0
+maxValue = 100.0
+hitBox = NodePath("../HitBox")
 
 [node name="StateTimer" type="Timer" parent="."]
 wait_time = 3.0

@@ -49,7 +49,6 @@ public partial class Enemy1 : Entity
 		gunNode = resource.GunScene.Instantiate<AnimatedWeapon>();
 		gunNode.Scale *= 1;
 		gunNode.Offset.MoveLocalX(0);	
-		gunNode.isUsingCursorPosition = false;
 		gunNode.Direction = Direction;
 		AddChild(gunNode);
 		MoveChild(gunNode, -1);
