@@ -1,0 +1,24 @@
+class Sentence{
+	// Содержит в себе
+	Question question;
+	List<Answer>? answers;
+}
+
+class Question{
+	uint id;
+	string text;
+}
+
+class Answer{
+	private uint id;
+	private uint incomingId;
+	private string text;
+	
+	private Action foo;
+	
+	ctor(foo)
+	
+	public void OnAnswerChosen(){
+		foo
+	}
+}

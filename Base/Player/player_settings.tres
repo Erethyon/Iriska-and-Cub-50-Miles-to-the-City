@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EntitySettings" load_steps=3 format=3 uid="uid://bmm2jgd48hwvy"]
+
+[ext_resource type="Script" path="res://Characters/Entity/EntitySettings.cs" id="1_fp36u"]
+[ext_resource type="PackedScene" uid="uid://bkpobsubgmqk7" path="res://Weapon/Gun/gun.tscn" id="1_q1o2p"]
+
+[resource]
+script = ExtResource("1_fp36u")
+HealthStartValue = 100.0
+HealthMaxValue = 100.0
+MoveSpeed = 100.0
+GunScene = ExtResource("1_q1o2p")
+GunDamageMultiplier = 1.0
+GunSpecialDamageMultiplier = 1.0
+ProjectileCollisionLayer = 4
+ProjectileCollisionMask = 31
+CollisionLayer = 2
+CollisionMask = 11
+HitboxLayer = 0
+HitboxMask = 16

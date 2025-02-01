@@ -1,0 +1,70 @@
+[gd_scene load_steps=9 format=3 uid="uid://ci8cc08ajpy3q"]
+
+[ext_resource type="Script" path="res://Characters/Zombie/Zombie.cs" id="1_h56s0"]
+[ext_resource type="Resource" uid="uid://dssxm87ybioy3" path="res://Characters/Zombie/zombie_settings.tres" id="2_npojg"]
+[ext_resource type="Texture2D" uid="uid://bg2uoob4fej1n" path="res://icon.svg" id="3_1fnbp"]
+[ext_resource type="Script" path="res://Dev/Templates/HitBox.cs" id="4_tyw1j"]
+[ext_resource type="PackedScene" uid="uid://dpsinhobss2f7" path="res://Base/Components/HealthComponent.tscn" id="5_v786y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2f6kw"]
+radius = 8.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6t8yu"]
+size = Vector2(18, 18)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jjuil"]
+radius = 121.037
+
+[node name="Zombie" type="CharacterBody2D" groups=["Enemy", "HasHealth"]]
+collision_layer = 8
+collision_mask = 31
+script = ExtResource("1_h56s0")
+resource = ExtResource("2_npojg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("3_1fnbp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2f6kw")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 10.0
+path_postprocessing = 1
+simplify_path = true
+simplify_epsilon = 0.2
+debug_enabled = true
+debug_path_custom_color = Color(1, 0, 0, 1)
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("4_tyw1j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("RectangleShape2D_6t8yu")
+debug_color = Color(0.957204, 0, 0.533834, 0.42)
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_v786y")]
+position = Vector2(0, -18)
+scale = Vector2(0.5, 0.5)
+StartValue = 100.0
+MaxValue = 100.0
+
+[node name="StateTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="PlayerPresenceDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerPresenceDetector"]
+shape = SubResource("CircleShape2D_jjuil")
+debug_color = Color(1.49205e-06, 0.634087, 0.433083, 0.42)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+collision_mask = 3

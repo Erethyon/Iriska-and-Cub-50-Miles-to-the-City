@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://dc1bkmi4hhulk"]
+
+[ext_resource type="Script" path="res://Maps/IntroMap/IntroMap.cs" id="1_bcjyy"]
+[ext_resource type="PackedScene" uid="uid://3hdvk3y8htm1" path="res://Maps/MapGen/TestMapGenerator.tscn" id="1_lcm3r"]
+[ext_resource type="Script" path="res://Maps/IntroMap/button.gd" id="4_g4p5w"]
+[ext_resource type="PackedScene" uid="uid://brugp6l0iqes5" path="res://Base/Player/PlayerSpawnPoint.tscn" id="5_6qs4c"]
+[ext_resource type="PackedScene" uid="uid://ci8cc08ajpy3q" path="res://Characters/Zombie/Zombie.tscn" id="5_pq740"]
+
+[node name="IntroMap" type="Node2D"]
+script = ExtResource("1_bcjyy")
+
+[node name="TestMapGenerator" parent="." instance=ExtResource("1_lcm3r")]
+metadata/_edit_lock_ = true
+
+[node name="Button" type="Button" parent="."]
+offset_left = -248.0
+offset_top = 73.0
+offset_right = 154.0
+offset_bottom = 153.0
+text = "БЕБРА"
+script = ExtResource("4_g4p5w")
+
+[node name="PlayerSpawnPoint" parent="." instance=ExtResource("5_6qs4c")]
+position = Vector2(-606, 371)
+
+[node name="Zombie" parent="." instance=ExtResource("5_pq740")]
+position = Vector2(229, 31)
+
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

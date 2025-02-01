@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://din1q3kbd2w6w"]
+
+[ext_resource type="Script" path="res://Weapon/Projectile/Projectile.cs" id="1_7gfix"]
+[ext_resource type="Texture2D" uid="uid://cjnb0fqxbjl5x" path="res://Assets/Projectiles/Projectile_texture.png" id="2_u8e7e"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_i0hbo"]
+bounce = 0.8
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y5d10"]
+radius = 3.16228
+
+[node name="Projectile" type="RigidBody2D" groups=["Projectile"]]
+collision_layer = 4
+collision_mask = 31
+physics_material_override = SubResource("PhysicsMaterial_i0hbo")
+can_sleep = false
+script = ExtResource("1_7gfix")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 3
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_u8e7e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_y5d10")
+
+[node name="Lifetime" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true

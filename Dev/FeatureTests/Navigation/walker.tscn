@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://cphsnjrvik3it"]
+
+[ext_resource type="Script" path="res://Dev/FeatureTests/Navigation/walker.gd" id="1_o5n17"]
+[ext_resource type="Texture2D" uid="uid://bg2uoob4fej1n" path="res://icon.svg" id="1_vs6rm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c5t8p"]
+size = Vector2(38, 38)
+
+[node name="Walker" type="CharacterBody2D"]
+script = ExtResource("1_o5n17")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -16.0
+offset_top = -50.0
+offset_right = 24.0
+offset_bottom = -27.0
+text = "бебра"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_c5t8p")
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_vs6rm")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true
+
+[node name="WanderCD" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="WanderCD" to="." method="_on_wander_cd_timeout"]

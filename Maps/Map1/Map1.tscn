@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bikv1lloe1pft"]
+
+[ext_resource type="Texture2D" uid="uid://bg2uoob4fej1n" path="res://icon.svg" id="1_3qnna"]
+[ext_resource type="Script" path="res://Maps/Map1/Map1.cs" id="1_kjw13"]
+[ext_resource type="PackedScene" uid="uid://cghh0071cuos4" path="res://Base/Player/Player.tscn" id="2_wmg54"]
+[ext_resource type="PackedScene" uid="uid://cbntx7esf7l55" path="res://Characters/Enemy1/Enemy1.tscn" id="3_p73qt"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_p8qsr"]
+vertices = PackedVector2Array(1250.37, -426.148, 1299.6, 854.719, -736.906, 801.227, -846.133, -306.68, -11.2578, -446.977)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1260, -436, 1310, 865, -746, 811, -857, -315, -12, -457)])
+
+[node name="Map1" type="Node2D"]
+script = ExtResource("1_kjw13")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_p8qsr")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(125, 31)
+rotation = 1.67552
+scale = Vector2(5.45313, 4.39844)
+skew = -0.322886
+texture = ExtResource("1_3qnna")
+
+[node name="Player" parent="." instance=ExtResource("2_wmg54")]
+
+[node name="Enemy1" parent="." node_paths=PackedStringArray("directTargetNode") instance=ExtResource("3_p73qt")]
+position = Vector2(433, 314)
+directTargetNode = NodePath("../Player")

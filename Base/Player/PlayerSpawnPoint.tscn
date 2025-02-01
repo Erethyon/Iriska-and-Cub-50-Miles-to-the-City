@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://brugp6l0iqes5"]
+
+[node name="PlayerSpawnPoint" type="Node2D"]

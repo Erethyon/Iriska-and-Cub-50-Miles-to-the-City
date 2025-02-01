@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://cghh0071cuos4"]
+
+[ext_resource type="Script" path="res://Base/Player/Player.cs" id="1_4t3s1"]
+[ext_resource type="Texture2D" uid="uid://bg2uoob4fej1n" path="res://icon.svg" id="2_0pjot"]
+[ext_resource type="Resource" uid="uid://bmm2jgd48hwvy" path="res://Base/Player/player_settings.tres" id="3_5fn66"]
+[ext_resource type="Script" path="res://Base/Player/PlayerCamera.cs" id="3_klhor"]
+[ext_resource type="PackedScene" uid="uid://dpsinhobss2f7" path="res://Base/Components/HealthComponent.tscn" id="5_iaqmi"]
+[ext_resource type="Script" path="res://Dev/Templates/HitBox.cs" id="6_vdj1h"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x1n7d"]
+radius = 7.61577
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n2l77"]
+size = Vector2(18, 18)
+
+[node name="Player" type="CharacterBody2D" groups=["HasHealth", "Player"]]
+collision_layer = 2
+collision_mask = 11
+floor_stop_on_slope = false
+floor_block_on_wall = false
+script = ExtResource("1_4t3s1")
+resource = ExtResource("3_5fn66")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("2_0pjot")
+
+[node name="PlayerCamera" type="Camera2D" parent="." node_paths=PackedStringArray("characterBody") groups=["PlayerCamera"]]
+position_smoothing_enabled = true
+script = ExtResource("3_klhor")
+characterBody = NodePath("..")
+startZoom = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_x1n7d")
+
+[node name="HitBox" type="Area2D" parent="."]
+editor_description = "Template that should be made local in scene with editable children"
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("6_vdj1h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("RectangleShape2D_n2l77")
+debug_color = Color(0.957204, 0, 0.533834, 0.42)
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_iaqmi")]
+position = Vector2(0, -26)
+scale = Vector2(0.5, 0.5)
+StartValue = 100.0
+MaxValue = 100.0

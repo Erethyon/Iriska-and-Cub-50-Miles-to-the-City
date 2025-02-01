@@ -1,0 +1,69 @@
+[gd_resource type="Resource" script_class="WalkerGeneratorSettings" load_steps=11 format=3 uid="uid://dthgrsr0gf3cm"]
+
+[ext_resource type="Script" path="res://addons/gaea/modifiers/2D/modifier_2d.gd" id="1_dvvo2"]
+[ext_resource type="Script" path="res://addons/gaea/modifiers/2D/fill.gd" id="2_rtvxq"]
+[ext_resource type="Script" path="res://addons/gaea/tile_info/tilemap_tile_info.gd" id="3_v24dl"]
+[ext_resource type="Script" path="res://addons/gaea/modifiers/2D/walls.gd" id="4_kf4i7"]
+[ext_resource type="Script" path="res://addons/gaea/generators/2D/walker_generator/walker_generator_settings.gd" id="5_3g1tb"]
+
+[sub_resource type="Resource" id="Resource_7ogu0"]
+script = ExtResource("3_v24dl")
+type = 1
+tilemap_layer = 0
+terrain_set = 0
+terrain = 2
+id = ""
+layer = 0
+
+[sub_resource type="Resource" id="Resource_42h4e"]
+script = ExtResource("2_rtvxq")
+tile = SubResource("Resource_7ogu0")
+expand_left = 15
+expand_top = 15
+expand_right = 15
+expand_bottom = 15
+enabled = true
+affected_layers = Array[int]([0])
+filter_type = 0
+
+[sub_resource type="Resource" id="Resource_phv24"]
+script = ExtResource("3_v24dl")
+type = 1
+tilemap_layer = 0
+terrain_set = 0
+terrain = 1
+id = ""
+layer = 0
+
+[sub_resource type="Resource" id="Resource_052we"]
+script = ExtResource("4_kf4i7")
+wall_tile = SubResource("Resource_phv24")
+enabled = true
+affected_layers = Array[int]([0])
+filter_type = 0
+
+[sub_resource type="Resource" id="Resource_botd1"]
+script = ExtResource("3_v24dl")
+type = 1
+tilemap_layer = 0
+terrain_set = 0
+terrain = 0
+id = ""
+layer = 0
+
+[resource]
+resource_name = "Settings"
+script = ExtResource("5_3g1tb")
+tile = SubResource("Resource_botd1")
+fullness_check = 0
+max_tiles = 600
+constrain_world_size = false
+max_walkers = 1
+new_dir_chance = 0.2
+new_walker_chance = 0.9
+destroy_walker_chance = 0.05
+room_chances = {
+Vector2i(2, 2): 0.0,
+Vector2i(3, 3): 0.5
+}
+modifiers = Array[ExtResource("1_dvvo2")]([SubResource("Resource_42h4e"), SubResource("Resource_052we")])
