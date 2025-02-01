@@ -46,9 +46,12 @@ script = ExtResource("5_mwvfm")
 shape = SubResource("RectangleShape2D_6t8yu")
 debug_color = Color(0.957204, 0, 0.533834, 0.42)
 
-[node name="HealthComponent" parent="." instance=ExtResource("4_w0mxx")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("hitBox") instance=ExtResource("4_w0mxx")]
 position = Vector2(0, -18)
 scale = Vector2(0.5, 0.5)
+startValue = 100.0
+maxValue = 100.0
+hitBox = NodePath("../HitBox")
 
 [node name="StateTimer" type="Timer" parent="."]
 wait_time = 3.0

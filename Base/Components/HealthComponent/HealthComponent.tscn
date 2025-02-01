@@ -143,7 +143,3 @@ script = ExtResource("3_0vyb5")
 libraries = {
 "": SubResource("AnimationLibrary_l8fw5")
 }
-
-[connection signal="HealthChanged" from="." to="RecentDamage" method="_on_health_component_health_changed"]
-[connection signal="HealthChanged" from="." to="ProgressBar" method="_on_health_component_health_changed"]
-[connection signal="HealthInitialized" from="." to="ProgressBar" method="_on_health_component_health_initialized"]

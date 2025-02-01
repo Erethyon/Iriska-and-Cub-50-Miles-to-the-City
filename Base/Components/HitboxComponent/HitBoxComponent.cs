@@ -20,10 +20,9 @@ public partial class HitBoxComponent : Area2D
             return warnings.ToArray();
         }
 
-        uint test = CollisionLayer ^ CollisionMask;
-        if (test == 0 && CollisionLayer == 1)
+        if (CollisionLayer == 1 && CollisionMask == 1)
         {
-            warnings.Add($"Проверьте CollisionLayer и CollisionMask у HealthComponent для {GetParent().Name}: в них вставлен только слой №1");
+            warnings.Add($"Проверьте CollisionLayer и CollisionMask у HealthComponent для в них вставлен только слой №1");
         }
         return warnings.ToArray();
     }

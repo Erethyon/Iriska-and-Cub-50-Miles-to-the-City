@@ -1,11 +1,23 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
 config_version=5
 
 [application]
 
-config/name="ABC-LOCAL"
+config/name="Iriska-and-Cub-50-Miles-to-the-City"
 run/main_scene="res://Base/Main/Loader.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://Assets/Characters/trollface.png"
+
+[autoload]
+
+Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
 [dialogic]
 
@@ -35,11 +47,11 @@ text/autopauses={}
 
 [dotnet]
 
-project/assembly_name="ABC"
+project/assembly_name="Iriska-and-Cub-50-Miles-to-the-City"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gaea/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogic/plugin.cfg", "res://addons/gaea/plugin.cfg")
 
 [global_group]
 

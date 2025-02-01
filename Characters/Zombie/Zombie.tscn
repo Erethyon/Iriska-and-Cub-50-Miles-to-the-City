@@ -3,13 +3,13 @@
 [ext_resource type="Script" path="res://Characters/Zombie/Zombie.cs" id="1_h56s0"]
 [ext_resource type="Resource" uid="uid://dssxm87ybioy3" path="res://Characters/Zombie/zombie_settings.tres" id="2_npojg"]
 [ext_resource type="Texture2D" uid="uid://bg2uoob4fej1n" path="res://icon.svg" id="3_1fnbp"]
-[ext_resource type="Script" path="res://Base/Components/HitboxComponent/HitBoxComponent.cs" id="4_tyw1j"]
-[ext_resource type="PackedScene" uid="uid://dpsinhobss2f7" path="res://Base/Components/HealthComponent/HealthComponent.tscn" id="5_v786y"]
+[ext_resource type="PackedScene" uid="uid://dpsinhobss2f7" path="res://Base/Components/HealthComponent/HealthComponent.tscn" id="5_4ihuy"]
+[ext_resource type="PackedScene" uid="uid://dpxbxkef60m1b" path="res://Base/Components/HitboxComponent/HitBoxComponent.tscn" id="5_piknx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2f6kw"]
 radius = 8.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6t8yu"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gifug"]
 size = Vector2(18, 18)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jjuil"]
@@ -37,25 +37,22 @@ simplify_epsilon = 0.2
 debug_enabled = true
 debug_path_custom_color = Color(1, 0, 0, 1)
 
-[node name="HitBox" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 4
-script = ExtResource("4_tyw1j")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-shape = SubResource("RectangleShape2D_6t8yu")
-debug_color = Color(0.957204, 0, 0.533834, 0.42)
-
-[node name="HealthComponent" parent="." node_paths=PackedStringArray("hitBox") instance=ExtResource("5_v786y")]
-position = Vector2(0, -18)
-scale = Vector2(0.5, 0.5)
-startValue = 100.0
-maxValue = 100.0
-hitBox = NodePath("../HitBox")
-
 [node name="StateTimer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("hitBox") instance=ExtResource("5_4ihuy")]
+position = Vector2(0, -30)
+scale = Vector2(0.5, 0.5)
+startValue = 100.0
+maxValue = 100.0
+hitBox = NodePath("../HitBoxComponent")
+
+[node name="HitBoxComponent" parent="." instance=ExtResource("5_piknx")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
+shape = SubResource("RectangleShape2D_gifug")
+debug_color = Color(0.953185, 6.73831e-07, 0.554854, 0.42)
 
 [node name="PlayerPresenceDetector" type="Area2D" parent="."]
 collision_layer = 0

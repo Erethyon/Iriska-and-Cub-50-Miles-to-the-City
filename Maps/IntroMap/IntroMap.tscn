@@ -21,7 +21,7 @@ text = "БЕБРА"
 script = ExtResource("4_g4p5w")
 
 [node name="PlayerSpawnPoint" parent="." instance=ExtResource("5_6qs4c")]
-position = Vector2(218, 245)
+position = Vector2(38, 277)
 
 [node name="Zombie" parent="." instance=ExtResource("5_pq740")]
 position = Vector2(229, 31)

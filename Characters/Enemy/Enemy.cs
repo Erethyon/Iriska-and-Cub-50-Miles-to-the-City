@@ -53,7 +53,6 @@ public abstract partial class Enemy : Entity
 		catch(Exception) { GD.PushWarning($"resource.GunScene not found in {Name} Scene Tree");}
 		gunNode.Scale *= 1;
 		gunNode.Offset.MoveLocalX(0);	
-		gunNode.isUsingCursorPosition = false;
 		gunNode.Direction = Direction;
 		AddChild(gunNode);
 		MoveChild(gunNode, -1);
