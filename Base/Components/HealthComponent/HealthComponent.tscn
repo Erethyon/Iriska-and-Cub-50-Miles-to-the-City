@@ -110,7 +110,6 @@ _data = {
 }
 
 [node name="HealthComponent" type="Node2D"]
-editor_description = "Template that should be made local in scene with editable children"
 script = ExtResource("1_32nhh")
 
 [node name="RecentDamage" type="Label" parent="."]
@@ -143,3 +142,7 @@ script = ExtResource("3_0vyb5")
 libraries = {
 "": SubResource("AnimationLibrary_l8fw5")
 }
+
+[connection signal="HealthChanged" from="." to="RecentDamage" method="_on_health_component_health_changed"]
+[connection signal="HealthChanged" from="." to="ProgressBar" method="_on_health_component_health_changed"]
+[connection signal="HealthInitialized" from="." to="ProgressBar" method="_on_health_component_health_initialized"]

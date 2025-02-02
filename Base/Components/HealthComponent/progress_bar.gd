@@ -1,8 +1,9 @@
 extends ProgressBar
 
 func _on_health_component_health_initialized(StartValue : float, MaxValue : float):
-	max_value = MaxValue;
 	value = StartValue;
+	max_value = MaxValue;
+	print(StartValue, MaxValue)
 	
 
 
