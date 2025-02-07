@@ -42,12 +42,10 @@ public partial class Zombie : NPC
 	}
 
 	protected override void OnScreenEntered(){
-		GD.Print("OnScreenEntered");
 		calcVelocity = calcVelocityToNavigateToTargetNode;
 	}
 
 	protected override void OnScreenExited(){
-		GD.Print("OnScreenExited");
 		navAgent.TargetPosition = directTargetNode.Position;
 		calcVelocity = calcVelocityToGoToTargetPosition;
 	}
@@ -58,7 +56,6 @@ public partial class Zombie : NPC
 	}
 
 	protected override void OnNavigationFinished(){
-		GD.Print("OnNavigationFinished");
 		Rid mapRid = navAgent.GetNavigationMap();
 		navAgent.TargetPosition = NavigationServer2D.MapGetRandomPoint(mapRid, 1, false);
 		calcVelocity = calcVelocityToPatrol;

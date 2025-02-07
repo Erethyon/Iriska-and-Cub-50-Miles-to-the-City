@@ -1,3 +1,12 @@
+## Установка
+Плагины:
+- генератор ландшафта Gaea
+- стейтмашина LimboAI
+- система диалогов Dialogic
+
+Если нужно писать код для LimboAI на C#, можно скачать nugetpkg:
+https://limboai.readthedocs.io/en/stable/getting-started/c-sharp.html
+
 ## TODO 31.01.25
 
 ### 1) Стрельба

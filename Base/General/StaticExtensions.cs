@@ -12,7 +12,6 @@ public static class StaticExtensions
         where ExcludeType : Node
         where T: ExcludeType
     {       
-        GD.Print($"Вызвана проверка для {node.Name} типа {node.GetType()}");
 		Type type = typeof(T);
         PropertyInfo[] allProperties = type.GetProperties();
 
