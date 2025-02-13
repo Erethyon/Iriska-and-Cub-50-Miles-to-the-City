@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6gmfemibl83x"]
+
+[ext_resource type="Script" path="res://Base/Components/Various States/HuntState.cs" id="1_avq6n"]
+
+[node name="HuntState" type="LimboState"]
+script = ExtResource("1_avq6n")

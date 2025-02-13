@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c516baes1upoy"]
+
+[ext_resource type="Script" path="res://Base/Components/Various States/PatrolState.cs" id="1_td3wo"]
+
+[node name="PatrolState" type="LimboState"]
+script = ExtResource("1_td3wo")

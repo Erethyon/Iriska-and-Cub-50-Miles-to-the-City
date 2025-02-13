@@ -65,7 +65,7 @@ public partial class HealthComponent : Node2D
 
     public override string[] _GetConfigurationWarnings()
     {
-        List<string> warnings = new List<string>();
+        List<string> warnings = new();
 
         if (hitBox == null)
         {

@@ -1,10 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://ci8cc08ajpy3q"]
+[gd_scene load_steps=12 format=3 uid="uid://ci8cc08ajpy3q"]
 
 [ext_resource type="Script" path="res://Characters/Zombie/Zombie.cs" id="1_h56s0"]
-[ext_resource type="Resource" uid="uid://dssxm87ybioy3" path="res://Characters/Zombie/zombie_settings.tres" id="2_npojg"]
+[ext_resource type="PackedScene" uid="uid://bkpobsubgmqk7" path="res://Weapon/Gun/gun.tscn" id="2_56pcf"]
 [ext_resource type="Texture2D" uid="uid://bg2uoob4fej1n" path="res://icon.svg" id="3_1fnbp"]
 [ext_resource type="PackedScene" uid="uid://dpsinhobss2f7" path="res://Base/Components/HealthComponent/HealthComponent.tscn" id="5_4ihuy"]
 [ext_resource type="PackedScene" uid="uid://dpxbxkef60m1b" path="res://Base/Components/HitboxComponent/HitBoxComponent.tscn" id="5_piknx"]
+[ext_resource type="Script" path="res://Characters/Zombie/ZombieHSM.cs" id="6_iho84"]
+[ext_resource type="PackedScene" uid="uid://c516baes1upoy" path="res://Base/Components/Various States/PatrolState.tscn" id="6_re327"]
+[ext_resource type="PackedScene" uid="uid://c6gmfemibl83x" path="res://Base/Components/Various States/HuntState.tscn" id="8_nhx2q"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2f6kw"]
 radius = 8.0
@@ -17,9 +20,9 @@ radius = 121.037
 
 [node name="Zombie" type="CharacterBody2D" groups=["Enemy", "HasHealth"]]
 collision_layer = 8
-collision_mask = 31
+collision_mask = 11
 script = ExtResource("1_h56s0")
-resource = ExtResource("2_npojg")
+gunScene = ExtResource("2_56pcf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0, 0, 1)
@@ -49,6 +52,8 @@ maxValue = 100.0
 hitBox = NodePath("../HitBoxComponent")
 
 [node name="HitBoxComponent" parent="." instance=ExtResource("5_piknx")]
+collision_layer = 8
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
 shape = SubResource("RectangleShape2D_gifug")
@@ -66,3 +71,12 @@ debug_color = Color(1.49205e-06, 0.634087, 0.433083, 0.42)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 collision_mask = 3
+
+[node name="LimboHSM" type="LimboHSM" parent="." node_paths=PackedStringArray("patrolState", "huntState")]
+script = ExtResource("6_iho84")
+patrolState = NodePath("PatrolState")
+huntState = NodePath("HuntState")
+
+[node name="PatrolState" parent="LimboHSM" instance=ExtResource("6_re327")]
+
+[node name="HuntState" parent="LimboHSM" instance=ExtResource("8_nhx2q")]

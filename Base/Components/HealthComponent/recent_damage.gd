@@ -7,8 +7,8 @@ extends Label
 #@export var heal_color : Color
 
 func _on_health_component_health_changed(delta):
-	if (delta <= 0 and !is_displaying_damage_only):
-		return;	
+	if (delta > 0 and !is_displaying_damage_only):
+		return;		# healing 
 	anim_player.stop()
 	text = str(delta)
 	anim_player.play("LabelBump")

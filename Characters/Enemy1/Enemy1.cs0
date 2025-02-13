@@ -5,11 +5,14 @@ using System.Linq;
 using System.Net;
 using static Constants;
 
-public partial class Enemy1 : Entity
+[Obsolete]
+public partial class Enemy1 : NPC
 {
 	[Export] protected Node2D? directTargetNode;
+	[Export] protected float moveSpeed = 50;
 	private Timer stateTimer;
 	private Area2D playerPresenceDetector;
+	[Export] protected PackedScene gunScene;
 	protected Vector2 direction = Vector2.Zero;
 	private AnimatedWeapon gunNode;
 	private float patrolSpeed = 0.5f;
@@ -21,7 +24,7 @@ public partial class Enemy1 : Entity
 	public Timer StateTimer => stateTimer;
 	public Area2D PlayerPresenceDetector => playerPresenceDetector;
 	public Vector2 Direction => direction;
-	public float MoveSpeed => resource.MoveSpeed;
+	public float MoveSpeed => moveSpeed;
 	public float PatrolSpeed => patrolSpeed;
 	public VisibleOnScreenNotifier2D IsVisibleNotifier => isVisibleNotifier;
 	public RayCast2D RayCast2D => rayCast2D;
@@ -36,17 +39,17 @@ public partial class Enemy1 : Entity
 		stateTimer = GetNode<Timer>("StateTimer");
 		//stateTimer.Timeout += OnStateTimerTimeout;
 		playerPresenceDetector = GetNode<Area2D>("PlayerPresenceDetector");
-		navAgent.TargetPosition = NavigationServer2D.MapGetRandomPoint(mapRid, 1, false);
+		BEH_navigationAgent2D.TargetPosition = NavigationServer2D.MapGetRandomPoint(mapRid, 1, false);
 		calcVelocity += calcVelocityToPatrol;
-		navAgent.NavigationFinished += OnNavigationFinished;
+		BEH_navigationAgent2D.NavigationFinished += OnNavigationFinished;
 		isVisibleNotifier = GetNode<VisibleOnScreenNotifier2D>("VisibleOnScreenNotifier2D");
 		isVisibleNotifier.ScreenEntered += OnScreenEntered;
 		isVisibleNotifier.ScreenExited += OnScreenExited;
-		mapRid = navAgent.GetNavigationMap();
+		mapRid = BEH_navigationAgent2D.GetNavigationMap();
 
 		rayCast2D = GetNode<RayCast2D>("RayCast2D");
 		
-		gunNode = resource.GunScene.Instantiate<AnimatedWeapon>();
+		gunNode = gunScene.Instantiate<AnimatedWeapon>();
 		gunNode.Scale *= 1;
 		gunNode.Offset.MoveLocalX(0);	
 		gunNode.Direction = Direction;
@@ -97,7 +100,7 @@ public partial class Enemy1 : Entity
 		// patrol state
 		if (randomValue < 0.8f){
 			GD.Print("patrol state");
-			mapRid = navAgent.GetNavigationMap();
+			mapRid = BEH_navigationAgent2D.GetNavigationMap();
 			GD.Print(mapRid.IsValid);
 			randomPointsOnPatrolArea.Add(NavigationServer2D.MapGetRandomPoint(mapRid, 1, false));
 			randomPointsOnPatrolArea.Add(NavigationServer2D.MapGetRandomPoint(mapRid, 1, false));
@@ -120,14 +123,14 @@ public partial class Enemy1 : Entity
 
 	private int indexOfLastRandomPoint = 0;
 	private void calcVelocityToPatrol(){
-		direction = (navAgent.GetNextPathPosition() - GlobalPosition).Normalized();
-		Velocity = direction * resource.MoveSpeed * patrolSpeed;
+		direction = (BEH_navigationAgent2D.GetNextPathPosition() - GlobalPosition).Normalized();
+		Velocity = direction * moveSpeed * patrolSpeed;
 	}
 
 	private void calcVelocityToNavigateToPlayer(){
-		navAgent.TargetPosition = directTargetNode.Position;
-		direction = (navAgent.GetNextPathPosition() - GlobalPosition).Normalized();
-		Velocity = direction * resource.MoveSpeed;
+		BEH_navigationAgent2D.TargetPosition = directTargetNode.Position;
+		direction = (BEH_navigationAgent2D.GetNextPathPosition() - GlobalPosition).Normalized();
+		Velocity = direction * moveSpeed;
 	}
 
 	private void OnScreenEntered(){
@@ -137,19 +140,19 @@ public partial class Enemy1 : Entity
 
 	private void OnScreenExited(){
 		GD.Print("OnScreenExited");
-		navAgent.TargetPosition = directTargetNode.Position;
+		BEH_navigationAgent2D.TargetPosition = directTargetNode.Position;
 		calcVelocity = calcVelocityToGoToTargetPosition;
 	}
 
 	private void calcVelocityToGoToTargetPosition(){
-		direction = (navAgent.GetNextPathPosition() - GlobalPosition).Normalized();
-		Velocity = direction * resource.MoveSpeed * patrolSpeed;
+		direction = (BEH_navigationAgent2D.GetNextPathPosition() - GlobalPosition).Normalized();
+		Velocity = direction * moveSpeed * patrolSpeed;
 	}
 
 	private void OnNavigationFinished(){
 		GD.Print("OnNavigationFinished");
-		Rid mapRid = navAgent.GetNavigationMap();
-		navAgent.TargetPosition = NavigationServer2D.MapGetRandomPoint(mapRid, 1, false);
+		Rid mapRid = BEH_navigationAgent2D.GetNavigationMap();
+		BEH_navigationAgent2D.TargetPosition = NavigationServer2D.MapGetRandomPoint(mapRid, 1, false);
 		calcVelocity = calcVelocityToPatrol;
 	}
 

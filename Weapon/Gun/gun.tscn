@@ -13,6 +13,10 @@ ProjectileScene = ExtResource("2_2ufv2")
 FireRate = 0.5
 ProjectileSpeed = 200.0
 ProjectileDamage = 10.0
+ProjectileCollisionLayer_Player = 4
+ProjectileCollisionMask_Player = 31
+ProjectileCollisionLayer_NPC = 16
+ProjectileCollisionMask_NPC = 31
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rt4sw"]
 atlas = ExtResource("3_2yuit")

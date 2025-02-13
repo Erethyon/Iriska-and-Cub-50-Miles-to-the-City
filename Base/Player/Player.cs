@@ -5,8 +5,8 @@ using static Constants;
 
 public partial class Player : Entity
 {
-  private float moveSpeed;  
-  private PackedScene? gunScene;
+  [Export] protected float moveSpeed = 80;
+  [Export] protected PackedScene gunScene;
   private AnimatedWeapon? gunNode;
 
   private Vector2 direction = Vector2.Zero;
@@ -18,8 +18,6 @@ public partial class Player : Entity
   public override void _Ready()
   {
     base._Ready();
-    moveSpeed = resource.MoveSpeed;
-    gunScene = resource.GunScene;
     gunNode = gunScene.Instantiate<AnimatedWeapon>();
     gunNode.Scale *= 1;
     AddChild(gunNode);

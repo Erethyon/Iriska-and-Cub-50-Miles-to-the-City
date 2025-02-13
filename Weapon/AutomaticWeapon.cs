@@ -18,8 +18,8 @@ public partial class AutomaticWeapon : AnimatedWeapon
     /// SetCalcDirectionSource в части инициализации
     /// </summary>
     protected override void OnShoot(){
-        direction = CalcDirection();
-        SpawnProjectile(Direction);
+        direction = CalcShootingDirection();
+        SpawnProjectile(direction);
     }
 
     /// <summary>
@@ -27,12 +27,12 @@ public partial class AutomaticWeapon : AnimatedWeapon
     /// </summary>
     protected override void SpawnProjectile(Vector2 direction){
         Projectile projectile = ProjectileScene.Instantiate<Projectile>(PackedScene.GenEditState.MainInherited);
-        projectile.startVelocity = direction * ProjectileSpeed;
+        projectile.startVelocity = direction.Normalized() * ProjectileSpeed;
         projectile.GlobalPosition = muzzle.GlobalPosition;
         projectile.Rotation = MathF.Atan2(direction.Y, direction.X);
         projectile.DamageValue = ProjectileDamage;
-        projectile.CollisionLayer = ownerNode.Resource.ProjectileCollisionLayer;
-        projectile.CollisionMask = ownerNode.Resource.ProjectileCollisionMask;
+        projectile.CollisionLayer = GetProjectileCollisionLayer();
+        projectile.CollisionMask = GetProjectileCollisionMask();
         GetTree().Root.AddChild(projectile);
     }
 }
