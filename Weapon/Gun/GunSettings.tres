@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=3 format=3 uid="uid://dh674xy50iqs5"]
+
+[ext_resource type="PackedScene" uid="uid://din1q3kbd2w6w" path="res://Weapon/Projectile/projectile.tscn" id="1_j7t4i"]
+[ext_resource type="Script" path="res://Weapon/WeaponSettings.cs" id="2_121qh"]
+
+[resource]
+script = ExtResource("2_121qh")
+DisplayedWeaponName = "Gray Gun"
+ProjectileScene = ExtResource("1_j7t4i")
+FireRate = 0.5
+ProjectileSpeed = 200.0
+ProjectileDamage = 10.0
+ProjectileCollisionLayer_Player = 4
+ProjectileCollisionMask_Player = 31
+ProjectileCollisionLayer_NPC = 16
+ProjectileCollisionMask_NPC = 31

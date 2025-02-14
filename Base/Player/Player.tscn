@@ -1,11 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://cghh0071cuos4"]
+[gd_scene load_steps=12 format=3 uid="uid://cghh0071cuos4"]
 
 [ext_resource type="Script" path="res://Base/Player/Player.cs" id="1_4t3s1"]
 [ext_resource type="Texture2D" uid="uid://bg2uoob4fej1n" path="res://icon.svg" id="2_0pjot"]
 [ext_resource type="PackedScene" uid="uid://bkpobsubgmqk7" path="res://Weapon/Gun/gun-outdated.tscn" id="2_aypw0"]
 [ext_resource type="Script" path="res://Base/Player/PlayerCamera.cs" id="3_klhor"]
+[ext_resource type="PackedScene" uid="uid://cxias6o3573aw" path="res://Weapon/Gun/gun.tscn" id="5_r6r73"]
 [ext_resource type="PackedScene" uid="uid://dpxbxkef60m1b" path="res://Base/Components/HitboxComponent/HitBoxComponent.tscn" id="6_50yk7"]
 [ext_resource type="PackedScene" uid="uid://dpsinhobss2f7" path="res://Base/Components/HealthComponent/HealthComponent.tscn" id="6_pirt3"]
+[ext_resource type="PackedScene" uid="uid://bs4l4eii5by1m" path="res://Weapon/Gun/GunAnimatedSprite.tscn" id="6_wy1lj"]
+[ext_resource type="PackedScene" uid="uid://d0gbo5tcfagfy" path="res://Weapon/NecessaryWeaponParts/Muzzle.tscn" id="7_lu6m6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x1n7d"]
 radius = 7.61577
@@ -34,6 +37,21 @@ startZoom = 1.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_x1n7d")
 debug_color = Color(1.44392e-06, 0.600146, 0.69916, 0.42)
+
+[node name="Gun" parent="." node_paths=PackedStringArray("animatedSprite", "offset", "muzzle") instance=ExtResource("5_r6r73")]
+animatedSprite = NodePath("Offset/GunAnimatedSprite")
+offset = NodePath("Offset")
+muzzle = NodePath("Offset/Muzzle")
+
+[node name="Offset" type="Node2D" parent="Gun"]
+position = Vector2(34.5567, 0)
+scale = Vector2(1.27, 1.27)
+
+[node name="GunAnimatedSprite" parent="Gun/Offset" instance=ExtResource("6_wy1lj")]
+
+[node name="Muzzle" parent="Gun/Offset" instance=ExtResource("7_lu6m6")]
+position = Vector2(20.0341, -3.14961)
+scale = Vector2(1, 1)
 
 [node name="HitBoxComponent" parent="." instance=ExtResource("6_50yk7")]
 collision_layer = 2

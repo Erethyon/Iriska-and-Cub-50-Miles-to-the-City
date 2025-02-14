@@ -1,3 +1,4 @@
 [gd_scene format=3 uid="uid://d0gbo5tcfagfy"]
 
 [node name="Muzzle" type="Node2D"]
+editor_description = "Создаёт нод, из которого начинают спавниться снаряды"

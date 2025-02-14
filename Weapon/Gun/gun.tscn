@@ -1,25 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxias6o3573aw"]
+[gd_scene load_steps=3 format=3 uid="uid://cxias6o3573aw"]
 
 [ext_resource type="Script" path="res://Weapon/Gun/Gun.cs" id="1_kyewy"]
-[ext_resource type="PackedScene" uid="uid://din1q3kbd2w6w" path="res://Weapon/Projectile/projectile.tscn" id="2_2ufv2"]
-[ext_resource type="Script" path="res://Weapon/WeaponSettings.cs" id="2_ynxkn"]
+[ext_resource type="Resource" uid="uid://dh674xy50iqs5" path="res://Weapon/Gun/GunSettings.tres" id="2_q777m"]
 
-[sub_resource type="Resource" id="Resource_2s8a3"]
-script = ExtResource("2_ynxkn")
-DisplayedWeaponName = "Gray Gun"
-ProjectileScene = ExtResource("2_2ufv2")
-FireRate = 0.5
-ProjectileSpeed = 200.0
-ProjectileDamage = 10.0
-ProjectileCollisionLayer_Player = 4
-ProjectileCollisionMask_Player = 31
-ProjectileCollisionLayer_NPC = 16
-ProjectileCollisionMask_NPC = 31
-
-[node name="Gun" type="Node2D" node_paths=PackedStringArray("animatedSprite", "offset", "muzzle")]
+[node name="Gun" type="Node2D"]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_kyewy")
-animatedSprite = NodePath("")
-offset = NodePath("")
-muzzle = NodePath("")
-weaponSettings = SubResource("Resource_2s8a3")
+weaponSettings = ExtResource("2_q777m")

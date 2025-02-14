@@ -65,14 +65,14 @@ public partial class HuntState : LimboState
 		
 		// Gun logic
 		if (isRayCastCollidingWithPlayer){
-			NPCAgent.GunNode.StartShooting();
+			NPCAgent.WeaponNode?.StartShooting();
 			// point a gun at a target node
-			NPCAgent.GunNode.PointWeaponAt(rayCast2D.GetCollisionPoint());// - NPCAgent.Position;
+			NPCAgent.WeaponNode?.PointWeaponAt(rayCast2D.GetCollisionPoint());// - NPCAgent.Position;
 		}
 		else{
-			NPCAgent.GunNode.StopShooting();
+			NPCAgent.WeaponNode?.StopShooting();
 			// point a gun in front of oneself
-			NPCAgent.GunNode.SetFacingDirection(direction);
+			NPCAgent.WeaponNode?.SetFacingDirection(direction);
 		}
 
     }

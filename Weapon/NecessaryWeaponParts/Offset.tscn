@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://bk7thaoqtm7vk"]
+
+[node name="Offset" type="Node2D"]
+editor_description = "Создаёт \"локальное пространство\" для AnimatedSprite и Muzzle, которое можно сдвигать относительно главного нода оружия"

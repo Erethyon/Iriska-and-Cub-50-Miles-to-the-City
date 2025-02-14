@@ -6,21 +6,18 @@ using static Constants;
 public partial class Player : Entity
 {
   [Export] protected float moveSpeed = 80;
-  [Export] protected PackedScene gunScene;
-  private AnimatedWeapon? gunNode;
-
+  private AnimatedWeapon? weaponNode;
   private Vector2 direction = Vector2.Zero;
 
-  public PackedScene? GunScene => gunScene;
   public Vector2 Direction => direction;
   public float MoveSpeed => moveSpeed;	
 
   public override void _Ready()
   {
     base._Ready();
-    gunNode = gunScene.Instantiate<AnimatedWeapon>();
-    gunNode.Scale *= 1;
-    AddChild(gunNode);
+    try { weaponNode = GetChildren().OfType<AnimatedWeapon>().First(); }
+		catch(Exception) {GD.PushWarning($"weaponNode not found in {Name} Scene Tree");}
+		weaponNode.SetFacingDirection(direction);
   }
 
 
@@ -38,15 +35,15 @@ public partial class Player : Entity
     if (@event is InputEventMouseButton inputEventMouseButton){
       // Shoot
       if (inputEventMouseButton.IsActionPressed(LEFT_MOUSE_BUTTON)){
-        gunNode.StartShooting();
+        weaponNode.StartShooting();
       }
       else{
-        gunNode.StopShooting();
+        weaponNode.StopShooting();
       }
       
       // Special mechanics on RMB
       if (inputEventMouseButton.IsActionPressed(RIGHT_MOUSE_BUTTON)){
-        gunNode.OnSpecialMechanic();
+        weaponNode.OnSpecialMechanic();
       }
     }
     base._Input(@event);
