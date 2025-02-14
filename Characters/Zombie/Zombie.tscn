@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://ci8cc08ajpy3q"]
 
 [ext_resource type="Script" path="res://Characters/Zombie/Zombie.cs" id="1_h56s0"]
-[ext_resource type="PackedScene" uid="uid://bkpobsubgmqk7" path="res://Weapon/Gun/gun.tscn" id="2_56pcf"]
+[ext_resource type="PackedScene" uid="uid://bkpobsubgmqk7" path="res://Weapon/Gun/gun-outdated.tscn" id="2_56pcf"]
 [ext_resource type="Texture2D" uid="uid://bg2uoob4fej1n" path="res://icon.svg" id="3_1fnbp"]
 [ext_resource type="PackedScene" uid="uid://dpsinhobss2f7" path="res://Base/Components/HealthComponent/HealthComponent.tscn" id="5_4ihuy"]
 [ext_resource type="PackedScene" uid="uid://dpxbxkef60m1b" path="res://Base/Components/HitboxComponent/HitBoxComponent.tscn" id="5_piknx"]

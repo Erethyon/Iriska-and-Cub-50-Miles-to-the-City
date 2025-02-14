@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Base/Player/Player.cs" id="1_4t3s1"]
 [ext_resource type="Texture2D" uid="uid://bg2uoob4fej1n" path="res://icon.svg" id="2_0pjot"]
-[ext_resource type="PackedScene" uid="uid://bkpobsubgmqk7" path="res://Weapon/Gun/gun.tscn" id="2_aypw0"]
+[ext_resource type="PackedScene" uid="uid://bkpobsubgmqk7" path="res://Weapon/Gun/gun-outdated.tscn" id="2_aypw0"]
 [ext_resource type="Script" path="res://Base/Player/PlayerCamera.cs" id="3_klhor"]
 [ext_resource type="PackedScene" uid="uid://dpxbxkef60m1b" path="res://Base/Components/HitboxComponent/HitBoxComponent.tscn" id="6_50yk7"]
 [ext_resource type="PackedScene" uid="uid://dpsinhobss2f7" path="res://Base/Components/HealthComponent/HealthComponent.tscn" id="6_pirt3"]

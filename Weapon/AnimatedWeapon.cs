@@ -2,50 +2,91 @@ using Godot;
 using System;
 using static Constants;
 
+/// <summary>
+/// Внутренняя механика обработки стрельбы такова, что <br/>
+/// есть <c>bool isShooting</c>, который "зажимает курок". <br/>
+/// То есть мы получаем подобие <b>авто-атаки</b> из террарии.<br/>
+/// <br/>
+/// Использует <c>Node2D._PhysicsProcess</c> для обработки стрельбы и<br/>
+/// при работе с <c>timeSinceLastShot</c> для реализации <b>"зажатого курка"</b> <br/>
+/// </summary>
 public abstract partial class AnimatedWeapon : Node2D
 {
-    [ExportGroup("Required Nodes")]
-    [Export] public Entity? ownerNode;
-    [Export] protected AnimatedSprite2D sprite;
+    [ExportGroup("Required Nodes")]    
+    [Export] protected AnimatedSprite2D animatedSprite;
     [Export] protected Node2D offset;
     [Export] protected Node2D muzzle;
     [ExportGroup("Gun Characteristics")]
     [Export] protected WeaponSettings weaponSettings;
+    [Export] protected float finalDamageMultiplier = 1.0f;
+    [Export] protected float finalSpecialDamageMultiplier = 1.0f;
 
-    // Для осуществления механики стрельбы
-    protected string displayedWeaponName;
-    protected bool isShooting = false;
-    protected float timeSinceLastShot = 0.0f;
-    protected float finalDamageMultiplier = 1.0f;
-    protected float finalSpecialDamageMultiplier = 1.0f;
-    protected Vector2 direction;
-
-    // public properties для сканирования на null
-    public string DisplayedWeaponName => displayedWeaponName;
-    public AnimatedSprite2D Sprite => sprite;
-    public Node2D Offset => offset;
-    public Node2D? OwnerNode => ownerNode;
-    public AnimatedSprite2D SpritePublic => sprite;
-    public Node2D Muzzle => muzzle;
-    public PackedScene ProjectileScene => weaponSettings.ProjectileScene;
-    public float FireRate => weaponSettings.FireRate;
-    public float ProjectileSpeed => weaponSettings.ProjectileSpeed;
-    public float ProjectileDamage => weaponSettings.ProjectileDamage;
-    public float FinalDamageMultiplier => finalDamageMultiplier;
-    public float FinalSpecialDamageMultiplier => finalSpecialDamageMultiplier;
-    //public Vector2 Direction => direction;
-    
+    // Для работы механики стрельбы
 
     /// <summary>
-    /// Посчитать направление стрельбы. Разный для Player и NPC классов.
+    /// состояние, отображающее "зажат" ли "курок" оружия
     /// </summary>
-    protected Func<Vector2> CalcShootingDirection;
-    private Vector2 calcShootingDirection_Player(){
-        return (GetGlobalMousePosition() - muzzle.GlobalPosition).Normalized();
-    }
-    private Vector2 calcShootingDirection_NPC(){
-        return direction;
-    }
+    protected bool isShooting = false;
+    /// <summary>
+    /// при зажатом курке оружие пытается создать новый инстанс снаряда
+    /// </summary>
+    protected float timeSinceLastShot = 0.0f;
+    /// <summary>
+    /// Направление оружия и направление, в котором создаётся снаряд
+    /// </summary>
+    protected Vector2 direction;
+    protected Entity ownerNode;
+
+    // public properties
+
+    /// <summary>
+    /// Value from a <see cref="WeaponSettings"/>
+    /// </summary>
+    public string DisplayedWeaponName => weaponSettings.DisplayedWeaponName;
+    /// <summary>
+    /// Value from a <see cref="WeaponSettings"/>
+    /// </summary>
+    public PackedScene ProjectileScene => weaponSettings.ProjectileScene;
+    /// <summary>
+    /// Value from a <see cref="WeaponSettings"/>
+    /// </summary>
+    public float FireRate => weaponSettings.FireRate;
+    /// <summary>
+    /// Value from a <see cref="WeaponSettings"/>
+    /// </summary>
+    public float ProjectileSpeed => weaponSettings.ProjectileSpeed;
+    /// <summary>
+    /// Value from a <see cref="WeaponSettings"/>
+    /// </summary>
+    public float ProjectileDamage => weaponSettings.ProjectileDamage;
+    /// <summary>
+    /// Instance-based damage multiplier
+    /// </summary>
+    public float FinalDamageMultiplier => finalDamageMultiplier;
+    /// <summary>
+    /// Instance-based damage multiplier for special attack
+    /// </summary>
+    public float FinalSpecialDamageMultiplier => finalSpecialDamageMultiplier;
+    /// <summary>
+    /// Типовые настройки для класса оружия
+    /// </summary>
+    public WeaponSettings WeaponSettings => weaponSettings;
+    
+    /// <summary>
+    /// The weapon created and configured the projectile. <br/>
+    /// <b>Should be invoked at the end of the <see cref="Shoot"/></b>
+    /// </summary>
+    [Signal] public delegate void WeaponShootedEventHandler();
+
+    /// <summary>
+    /// Оружие начало стрелять. На оружии <b>зажали</b> курок.
+    /// </summary>
+    [Signal] public delegate void WeaponStartedShootingEventHandler();
+
+    /// <summary>
+    /// Оружие перестало стрелять. На оружии <b>отжали</b> курок.
+    /// </summary>
+    [Signal] public delegate void WeaponStoppedShootingEventHandler();
 
     /// <summary>
     /// Один из способов направить оружие в нужном направлении. <br/>
@@ -66,14 +107,20 @@ public abstract partial class AnimatedWeapon : Node2D
         this.direction = normDirection;
     }
 
-
+    /// <summary>
+    /// В зависимости от типа Parent-нода (Player or NPC) выставляет функции
+    /// <code>
+    /// CalcShootingDirection, GetProjectileCollisionLayer, GetProjectileCollisionMask, UpdateSpriteFlipState
+    /// но
+    /// flipSprite = flipSpriteDefault;
+    /// </code>
+    /// </summary>
     public override void _Ready()
     {   
-        displayedWeaponName = weaponSettings.DisplayedWeaponName;
+        ownerNode = GetParent<Entity>();
         flipSprite = flipSpriteDefault;
 
-        ownerNode = GetParent<Entity>();
-        if (OwnerNode is Player){
+        if (ownerNode is Player){
             CalcShootingDirection = calcShootingDirection_Player;
             GetProjectileCollisionLayer = GetProjectileCollisionLayer_Player;
             GetProjectileCollisionMask = GetProjectileCollisionMask_Player;
@@ -85,16 +132,33 @@ public abstract partial class AnimatedWeapon : Node2D
             GetProjectileCollisionMask = GetProjectileCollisionMask_NPC;
             UpdateSpriteFlipState = UpdateSpriteFlipState_NPC;
         }
+    }
+    
+    /// <summary>
+    /// Update sprite flip state <br/>
+    /// </summary>
+    public override void _PhysicsProcess(double delta)
+    {
+        UpdateSpriteFlipState();
+    }
 
-        // check for nulls
-        StaticExtensions.CheckPublicMembersForNull_Node<Node2D, AnimatedWeapon>(this);
-        base._Ready();
+    //////////////////////// Owner's type based actions ////////////////////////
+
+    /// <summary>
+    /// Посчитать направление стрельбы. Разный для Player и NPC классов.
+    /// </summary>
+    protected Func<Vector2> CalcShootingDirection {get; private set;}
+    private Vector2 calcShootingDirection_Player(){
+        return (GetGlobalMousePosition() - muzzle.GlobalPosition).Normalized();
+    }
+    private Vector2 calcShootingDirection_NPC(){
+        return direction;
     }
 
     /// <summary>
-    /// Получить слои коллизии для снаряда. Разный для обладателя-игрока и обладателя-NPC
+    /// Получить слои коллизии для снаряда. Разный для Player и NPC классов.
     /// </summary>
-    protected Func<uint> GetProjectileCollisionLayer;
+    protected Func<uint> GetProjectileCollisionLayer {get; private set;}
     private uint GetProjectileCollisionLayer_Player(){
         return weaponSettings.ProjectileCollisionLayer_Player;
     }
@@ -103,9 +167,9 @@ public abstract partial class AnimatedWeapon : Node2D
     }
 
     /// <summary>
-    /// Получить маски коллизии для снаряда. Разный для обладателя-игрока и обладателя-NPC
+    /// Получить маски коллизии для снаряда. Разный для Player и NPC классов.
     /// </summary>
-    protected Func<uint> GetProjectileCollisionMask;
+    protected Func<uint> GetProjectileCollisionMask {get; private set;}
     private uint GetProjectileCollisionMask_Player(){
         return weaponSettings.ProjectileCollisionMask_Player;
     }
@@ -114,23 +178,36 @@ public abstract partial class AnimatedWeapon : Node2D
     }
 
 
-    /// Shooting mechanics ////
+    /////////////////////////// Shooting mechanics ////////////////////////
     /// <summary>
     /// Зажать курок
     /// </summary>
-    public virtual void StartShooting() => isShooting = true;
+    public virtual void StartShooting() {
+        isShooting = true;
+        EmitSignal(SignalName.WeaponStartedShooting);
+    }
     /// <summary>
     /// Разжать курок
     /// </summary>
-    public virtual void StopShooting() => isShooting = false;
+    public virtual void StopShooting(){
+        isShooting = false;
+        EmitSignal(SignalName.WeaponStoppedShooting);
+    }
 
     /// <summary>
-    /// Внутренняя механика обработки стрельбы такова, что <br/>
-    /// есть <c>bool isShooting</c>, который "зажимает курок". <br/>
-    /// Эта функция решает, что должно происходить при каждом нужном выстреле<br/> 
-    /// И эта функция позволяет создать какой-нибудь паттерн стрельбы
+    /// Описывает то, что должно происходить при нажатом курке<br/>
+    /// <code>
+    /// Например,
+    /// Посчитано направление для спавна снаряда
+    /// Создана задержка или
+    /// Проиграна анимация
+    /// Вызвана функция SpawnProjectile
+    /// </code>
+    /// <b>Вызывает сигнал <see cref="WeaponShootedEventHandler"/></b>
     /// </summary>
-    protected abstract void OnShoot();
+    protected virtual void Shoot(){
+        EmitSignal(SignalName.WeaponShooted);
+    }
     /// <summary>
     /// Функция для инстанцирования сцены, создания и настройки снаряда
     /// </summary>
@@ -140,9 +217,14 @@ public abstract partial class AnimatedWeapon : Node2D
     public virtual void OnSpecialMechanic(){}
 
 
-    //// Sprite control stuff ////
-    private Action<bool> flipSprite;
-    private void flipSpriteDefault(bool isFlipped) => sprite.FlipV = isFlipped;
+    //////////////////////// Sprite control stuff ////////////////////////
+    
+    /// <summary>
+    /// Функция отзеркаливания спрайта для левой полуокружности значений вектора <see cref="direction"/> <br/>
+    /// Будет записано <see cref="flipSpriteDefault"/> по-умолчанию
+    /// </summary>
+    protected Action<bool> flipSprite;
+    private void flipSpriteDefault(bool isFlipped) => animatedSprite.FlipV = isFlipped;
 
     private Action UpdateSpriteFlipState;
     protected void UpdateSpriteFlipState_Player(){
@@ -157,23 +239,11 @@ public abstract partial class AnimatedWeapon : Node2D
 
     protected void UpdateSpriteFlipState_NPC(){
         if ((GlobalPosition + CalcShootingDirection()).X < GlobalPosition.X){
-            flipSprite(false);
-        }
-        else if ((GlobalPosition + CalcShootingDirection()).X > GlobalPosition.X){
             flipSprite(true);
         }
-        LookAt(GlobalPosition + CalcShootingDirection());
-    }
-    
-    public override void _Process(double delta)
-    {
-        UpdateSpriteFlipState();
-        if (isShooting && timeSinceLastShot >= FireRate)
-        {
-            OnShoot();
-            timeSinceLastShot = 0.0f;
+        else if ((GlobalPosition + CalcShootingDirection()).X > GlobalPosition.X){
+            flipSprite(false);
         }
-
-        timeSinceLastShot += (float)delta;
+        LookAt(GlobalPosition + CalcShootingDirection());
     }
 }

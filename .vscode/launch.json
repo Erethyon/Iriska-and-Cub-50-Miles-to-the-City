@@ -1,16 +1,15 @@
 {
     "version": "0.2.0",
     "configurations": [
-        
         {
-            "name": "Play",
+            "name": "Debug",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${env:GODOT4}",
-            "args": [],
+            "console" : "internalConsole",
+            "program": "D:/Program Files/Godot_v4.3_limboai/godot.windows.editor.x86_64.mono",
+            //"program": "${env:GODOT4}",
             "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
         }
     ]
 }

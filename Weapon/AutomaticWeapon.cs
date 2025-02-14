@@ -3,13 +3,31 @@ using System;
 using System.Runtime.CompilerServices;
 using static Constants;
 
+/// <summary>
+/// Handles full auto shooting out of the box
+/// </summary>
 public partial class AutomaticWeapon : AnimatedWeapon 
 {
+    /// <summary>
+    /// Настроить оружие through <c>base._Ready()</c> и проиграть ANIM_IDLE
+    /// </summary>
     public override void _Ready()
     {
-        ownerNode = GetOwner<Entity>();
-        sprite.Play(ANIM_IDLE);
         base._Ready();
+        animatedSprite.Play(ANIM_IDLE);
+    }
+
+    /// <summary>
+    /// Handle full auto shooting
+    /// </summary>
+    public override void _PhysicsProcess(double delta) {
+        base._PhysicsProcess(delta);
+        if (isShooting && timeSinceLastShot >= FireRate)
+        {
+            Shoot();
+            timeSinceLastShot = 0.0f;
+        }
+        timeSinceLastShot += (float)delta;
     }
 
     /// <summary>
@@ -17,9 +35,10 @@ public partial class AutomaticWeapon : AnimatedWeapon
     /// Теперь создан Func CalcDirection и функция 
     /// SetCalcDirectionSource в части инициализации
     /// </summary>
-    protected override void OnShoot(){
+    protected override void Shoot(){
         direction = CalcShootingDirection();
         SpawnProjectile(direction);
+        base.Shoot();
     }
 
     /// <summary>

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="EntitySettings" load_steps=3 format=3 uid="uid://bmm2jgd48hwvy"]
 
 [ext_resource type="Script" path="res://Characters/Entity/EntitySettings.cs" id="1_fp36u"]
-[ext_resource type="PackedScene" uid="uid://bkpobsubgmqk7" path="res://Weapon/Gun/gun.tscn" id="1_q1o2p"]
+[ext_resource type="PackedScene" uid="uid://bkpobsubgmqk7" path="res://Weapon/Gun/gun-outdated.tscn" id="1_q1o2p"]
 
 [resource]
 script = ExtResource("1_fp36u")

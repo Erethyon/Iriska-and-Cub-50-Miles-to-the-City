@@ -73,7 +73,6 @@ public abstract partial class NPC : Entity
 		try {gunNode = gunScene.Instantiate<AnimatedWeapon>();}
 		catch(Exception) { GD.PushWarning($"resource.GunScene not found in {Name} Scene Tree");}
 		
-		gunNode.Offset.MoveLocalX(0);	
 		gunNode.SetFacingDirection(direction);
 		AddChild(gunNode);
 		MoveChild(gunNode, -1);

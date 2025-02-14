@@ -1,10 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://bkpobsubgmqk7"]
+[gd_scene load_steps=5 format=3 uid="uid://cxias6o3573aw"]
 
 [ext_resource type="Script" path="res://Weapon/Gun/Gun.cs" id="1_kyewy"]
 [ext_resource type="PackedScene" uid="uid://din1q3kbd2w6w" path="res://Weapon/Projectile/projectile.tscn" id="2_2ufv2"]
 [ext_resource type="Script" path="res://Weapon/WeaponSettings.cs" id="2_ynxkn"]
-[ext_resource type="Texture2D" uid="uid://7aysolfqjd7t" path="res://Assets/Weapons/GunSpriteSheet.png" id="3_2yuit"]
-[ext_resource type="Texture2D" uid="uid://cjnb0fqxbjl5x" path="res://Assets/Projectiles/Projectile_texture.png" id="5_gkmdx"]
 
 [sub_resource type="Resource" id="Resource_2s8a3"]
 script = ExtResource("2_ynxkn")
@@ -18,152 +16,10 @@ ProjectileCollisionMask_Player = 31
 ProjectileCollisionLayer_NPC = 16
 ProjectileCollisionMask_NPC = 31
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rt4sw"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(0, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pwnti"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(0, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4dvr0"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(64, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kf236"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(128, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g802p"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(192, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nv00x"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(256, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xnxry"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(320, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nxtwl"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(384, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_oyxq0"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(448, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mi4ri"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(512, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_owv6l"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(576, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7dckt"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(640, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ijfyn"]
-atlas = ExtResource("3_2yuit")
-region = Rect2(704, 0, 64, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_m4fdm"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rt4sw")
-}],
-"loop": false,
-"name": &"Idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pwnti")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4dvr0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kf236")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_g802p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nv00x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xnxry")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nxtwl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_oyxq0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mi4ri")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_owv6l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7dckt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ijfyn")
-}],
-"loop": false,
-"name": &"Shoot",
-"speed": 30.0
-}, {
-"frames": [],
-"loop": false,
-"name": &"SpecialAbility",
-"speed": 5.0
-}]
-
-[node name="Gun" type="Node2D" node_paths=PackedStringArray("sprite", "offset", "muzzle")]
+[node name="Gun" type="Node2D" node_paths=PackedStringArray("animatedSprite", "offset", "muzzle")]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_kyewy")
-sprite = NodePath("Offset/GunSprite")
-offset = NodePath("Offset")
-muzzle = NodePath("Offset/Muzzle")
+animatedSprite = NodePath("")
+offset = NodePath("")
+muzzle = NodePath("")
 weaponSettings = SubResource("Resource_2s8a3")
-
-[node name="Offset" type="Node2D" parent="."]
-position = Vector2(17, 0)
-
-[node name="GunSprite" type="AnimatedSprite2D" parent="Offset"]
-texture_filter = 3
-position = Vector2(21.76, 0)
-sprite_frames = SubResource("SpriteFrames_m4fdm")
-animation = &"Shoot"
-metadata/_edit_lock_ = true
-
-[node name="DEBUG" type="Sprite2D" parent="Offset/GunSprite"]
-visible = false
-scale = Vector2(0.44, 0.44)
-texture = ExtResource("5_gkmdx")
-
-[node name="CoolDownTimer" type="Timer" parent="Offset"]
-
-[node name="DEBUG" type="Sprite2D" parent="Offset"]
-scale = Vector2(0.239998, 0.239998)
-texture = ExtResource("5_gkmdx")
-metadata/_edit_lock_ = true
-
-[node name="Muzzle" type="Node2D" parent="Offset"]
-visible = false
-position = Vector2(20.535, 0)
-metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
-
-[node name="DEBUG" type="Sprite2D" parent="Offset/Muzzle"]
-modulate = Color(0.552941, 0.968627, 1, 1)
-scale = Vector2(0.239998, 0.239998)
-texture = ExtResource("5_gkmdx")

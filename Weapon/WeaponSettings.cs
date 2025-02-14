@@ -1,9 +1,18 @@
 using Godot;
 using System;
 
-[Tool]
-[GlobalClass]
-public partial class WeaponSettings : Resource
+/// <summary>
+/// Набор параметров для оружия
+/// <code>
+/// Название пушки, 
+/// снаряд, 
+/// скорость стрельбы
+/// урон и скорость полета снаряда
+/// ----
+/// Уровни и маски для <c>Player</c> и <c>NPC</c>
+/// </code>
+/// </summary>
+[Tool] [GlobalClass] public partial class WeaponSettings : Resource
 {
     [Export] public string DisplayedWeaponName {get; set;}
     [Export] public PackedScene ProjectileScene {get; set;}
