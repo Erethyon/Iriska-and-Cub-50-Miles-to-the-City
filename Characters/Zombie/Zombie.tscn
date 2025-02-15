@@ -86,7 +86,6 @@ scale = Vector2(1.27, 1.27)
 
 [node name="Muzzle" parent="Gun/Offset" instance=ExtResource("10_75x71")]
 position = Vector2(20.0341, -3.14961)
-scale = Vector2(1, 1)
 
 [node name="LimboHSM" type="LimboHSM" parent="." node_paths=PackedStringArray("patrolState", "huntState")]
 script = ExtResource("6_iho84")

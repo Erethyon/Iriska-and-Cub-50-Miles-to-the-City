@@ -6,14 +6,14 @@ using System;
 /// В базовой логике не пытается никак никого атаковать, но хранит 
 /// в себе значение наносимого урона.
 /// </summary>
-public partial class Projectile : RigidBody2D
+public partial class Projectile : RigidBody2D, IHealthModifier
 {
 	[Export] private Node2D sprite;
 	[Export] private Timer lifetime;
-	[Export] private float _damageValue = 0.5f;
+	[Export(PropertyHint.Range, "-1000, 0, 0, or_greater,or_less")] private float _damageValue = -0.5f;
 
 	/// <summary>
-	/// Поле, "сырое" хранящее в себе значение урона, которое должно нанестись 
+	/// Поле, "сырое" хранящее в себе значение здоровья, которое должно прибавиться <br/> 
 	/// HealthComponent
 	/// </summary>
 	public float DamageValue {get; set; }
@@ -22,6 +22,8 @@ public partial class Projectile : RigidBody2D
 	/// Скорость в части кода ApplyImpulse(startVelocity) 
 	/// </summary>
     public Vector2 startVelocity {get; set;}
+    
+	float IHealthModifier.DeltaHealthValue{get => _damageValue; set => _damageValue = value;}
 
     public override void _Ready()
     {

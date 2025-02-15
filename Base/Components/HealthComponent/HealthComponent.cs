@@ -8,8 +8,8 @@ using System.Linq;
 public partial class HealthComponent : Node2D
 {   
     private float healthValue;
-    [Export] private float startValue;
-    [Export] private float maxValue;
+    [Export(PropertyHint.Range, "0, 10000, 0, or_greater, or_less")] private float startValue;
+    [Export(PropertyHint.Range, "0, 10000, 0, or_greater, or_less")] private float maxValue;
     [Export] private HitBoxComponent? hitBox;
 
     public float StartValue => startValue;
@@ -39,31 +39,30 @@ public partial class HealthComponent : Node2D
     private void OnBodyEntered(Node2D node2d){
         collisionsCount++;
         GD.Print($"{collisionsCount}) {GetParent().Name} collided with {node2d.Name} so my hp is {HealthValue}");
-        if (node2d is IHealthEffectorCollidable)
-        if (node2d is Projectile projectile){
-            HealthValue -= projectile.DamageValue;
+        if (node2d is IHealthModifier healthModifier){
+            HealthValue += healthModifier.DeltaHealthValue;
         }
         if (node2d is HealthPickup healthPickup){
             HealthValue += healthPickup.HealthValue;
         }
     }
 
-    [Signal]
     /// <summary>
     /// Событие, оповещающее об инициализации компонента с параметрами начального значения и максимального
     /// </summary>
+    [Signal]
     public delegate void HealthInitializedEventHandler(float StartValue, float MaxValue);
 
-    [Signal]
     /// <summary>
     /// Событие, оповещающее об изменении значения компонента
     /// </summary>
+    [Signal]
     public delegate void HealthChangedEventHandler(float delta);
 
-    [Signal]
     /// <summary>
     /// Событие, оповещающее об падении значения здоровья до 0 или меньше 0
     /// </summary>
+    [Signal]
     public delegate void HealthZeroOrBelowEventHandler();
 
 
