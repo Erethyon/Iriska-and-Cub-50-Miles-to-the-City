@@ -6,11 +6,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_y5d10"]
 radius = 7.28011
 
-[node name="Projectile" type="RigidBody2D"]
+[node name="Bullet" type="RigidBody2D" node_paths=PackedStringArray("lifetime")]
 collision_layer = 4
 collision_mask = 13
 can_sleep = false
 script = ExtResource("1_2x74x")
+lifetime = NodePath("Lifetime")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

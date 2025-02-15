@@ -8,7 +8,6 @@ using System;
 /// </summary>
 public partial class Projectile : RigidBody2D, IHealthModifier
 {
-	[Export] private Node2D sprite;
 	[Export] private Timer lifetime;
 	[Export(PropertyHint.Range, "-1000, 0, 0, or_greater,or_less")] private float _damageValue = -0.5f;
 
@@ -28,7 +27,6 @@ public partial class Projectile : RigidBody2D, IHealthModifier
     public override void _Ready()
     {
         base._Ready();
-		sprite = GetNode<Node2D>("Sprite2D");
 		lifetime = GetNode<Timer>("Lifetime");
 		lifetime.Timeout += OnLifetimeEnded;
 		lifetime.Start();
