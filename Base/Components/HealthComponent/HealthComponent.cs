@@ -8,8 +8,8 @@ using System.Linq;
 public partial class HealthComponent : Node2D
 {   
     private float healthValue;
-    [Export] private float startValue;
-    [Export] private float maxValue;
+    [Export(PropertyHint.Range, "0, 10000, 0, or_greater, or_less")] private float startValue;
+    [Export(PropertyHint.Range, "0, 10000, 0, or_greater, or_less")] private float maxValue;
     [Export] private HitBoxComponent? hitBox;
 
     public float StartValue => startValue;
@@ -39,8 +39,8 @@ public partial class HealthComponent : Node2D
     private void OnBodyEntered(Node2D node2d){
         collisionsCount++;
         GD.Print($"{collisionsCount}) {GetParent().Name} collided with {node2d.Name} so my hp is {HealthValue}");
-        if (node2d is Projectile projectile){
-            HealthValue -= projectile.DamageValue;
+        if (node2d is IHealthModifier healthModifier){
+            HealthValue += healthModifier.DeltaHealthValue;
         }
     }
 

@@ -18,9 +18,9 @@ public partial class WeaponSettings : Resource
 {
     [Export] public string DisplayedWeaponName {get; set;}
     [Export] public PackedScene ProjectileScene {get; set;}
-    [Export] public float FireRate {get; set;} = 0.5f;
-    [Export] public float ProjectileSpeed {get; set;} = 400f;
-    [Export] public float ProjectileDamage {get; set;} = 0.5f;
+    [Export(PropertyHint.Range, "0, 60, 0, or_greater,or_less")] public float FireRate {get; set;} = 0.5f;
+    [Export(PropertyHint.Range, "100, 10000, 0, or_greater,or_less")] public float ProjectileSpeed {get; set;} = 400f;
+    [Export(PropertyHint.Range, "-1000, 0, 0, or_greater,or_less")] public float ProjectileDamage {get; set;} = -0.5f;
     
     [ExportGroup("Маски и уровни, если оружие использует игрок")]
     [Export(PropertyHint.Layers2DPhysics)]
