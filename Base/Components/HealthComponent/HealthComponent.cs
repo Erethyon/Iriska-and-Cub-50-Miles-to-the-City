@@ -39,8 +39,12 @@ public partial class HealthComponent : Node2D
     private void OnBodyEntered(Node2D node2d){
         collisionsCount++;
         GD.Print($"{collisionsCount}) {GetParent().Name} collided with {node2d.Name} so my hp is {HealthValue}");
+        if (node2d is IHealthEffectorCollidable)
         if (node2d is Projectile projectile){
             HealthValue -= projectile.DamageValue;
+        }
+        if (node2d is HealthPickup healthPickup){
+            HealthValue += healthPickup.HealthValue;
         }
     }
 

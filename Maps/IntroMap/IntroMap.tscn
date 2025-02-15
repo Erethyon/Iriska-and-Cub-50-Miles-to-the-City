@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dc1bkmi4hhulk"]
+[gd_scene load_steps=7 format=3 uid="uid://dc1bkmi4hhulk"]
 
 [ext_resource type="Script" path="res://Maps/IntroMap/IntroMap.cs" id="1_bcjyy"]
 [ext_resource type="PackedScene" uid="uid://3hdvk3y8htm1" path="res://Maps/MapGen/TestMapGenerator.tscn" id="1_lcm3r"]
 [ext_resource type="Script" path="res://Maps/IntroMap/button.gd" id="4_g4p5w"]
 [ext_resource type="PackedScene" uid="uid://brugp6l0iqes5" path="res://Base/Player/PlayerSpawnPoint.tscn" id="5_6qs4c"]
 [ext_resource type="PackedScene" uid="uid://ci8cc08ajpy3q" path="res://Characters/Zombie/Zombie.tscn" id="5_pq740"]
+[ext_resource type="PackedScene" uid="uid://biw4mysm67e3l" path="res://Pickups/HealthPickup/HealthPickup.tscn" id="6_gajlm"]
 
 [node name="IntroMap" type="Node2D"]
 script = ExtResource("1_bcjyy")
@@ -25,5 +26,11 @@ position = Vector2(38, 277)
 
 [node name="Zombie" parent="." instance=ExtResource("5_pq740")]
 position = Vector2(229, 31)
+
+[node name="HealthPickup" parent="." instance=ExtResource("6_gajlm")]
+position = Vector2(261, 240)
+
+[node name="HealthPickup2" parent="." instance=ExtResource("6_gajlm")]
+position = Vector2(294, 256)
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
