@@ -76,17 +76,20 @@ public abstract partial class AnimatedWeapon : Node2D
     /// The weapon created and configured the projectile. <br/>
     /// <b>Should be invoked at the end of the <see cref="Shoot"/></b>
     /// </summary>
-    [Signal] public delegate void WeaponShootedEventHandler();
+    [Signal] 
+    public delegate void WeaponShootedEventHandler();
 
     /// <summary>
     /// Оружие начало стрелять. На оружии <b>зажали</b> курок.
     /// </summary>
-    [Signal] public delegate void WeaponStartedShootingEventHandler();
+    [Signal] 
+    public delegate void WeaponStartedShootingEventHandler();
 
     /// <summary>
     /// Оружие перестало стрелять. На оружии <b>отжали</b> курок.
     /// </summary>
-    [Signal] public delegate void WeaponStoppedShootingEventHandler();
+    [Signal] 
+    public delegate void WeaponStoppedShootingEventHandler();
 
     /// <summary>
     /// Один из способов направить оружие в нужном направлении. <br/>
