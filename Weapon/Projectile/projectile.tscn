@@ -9,12 +9,13 @@ bounce = 0.8
 [sub_resource type="CircleShape2D" id="CircleShape2D_y5d10"]
 radius = 3.16228
 
-[node name="Projectile" type="RigidBody2D" groups=["Projectile"]]
+[node name="Projectile" type="RigidBody2D" node_paths=PackedStringArray("lifetime") groups=["Projectile"]]
 collision_layer = 4
 collision_mask = 31
 physics_material_override = SubResource("PhysicsMaterial_i0hbo")
 can_sleep = false
 script = ExtResource("1_7gfix")
+lifetime = NodePath("Lifetime")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
