@@ -44,22 +44,22 @@ public partial class HealthComponent : Node2D
         }
     }
 
-    [Signal]
     /// <summary>
     /// Событие, оповещающее об инициализации компонента с параметрами начального значения и максимального
     /// </summary>
+    [Signal]
     public delegate void HealthInitializedEventHandler(float StartValue, float MaxValue);
 
-    [Signal]
     /// <summary>
     /// Событие, оповещающее об изменении значения компонента
     /// </summary>
+    [Signal]
     public delegate void HealthChangedEventHandler(float delta);
 
-    [Signal]
     /// <summary>
     /// Событие, оповещающее об падении значения здоровья до 0 или меньше 0
     /// </summary>
+    [Signal]
     public delegate void HealthZeroOrBelowEventHandler();
 
 

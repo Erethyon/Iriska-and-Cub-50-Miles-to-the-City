@@ -12,7 +12,9 @@ using System;
 /// Уровни и маски для <c>Player</c> и <c>NPC</c>
 /// </code>
 /// </summary>
-[Tool] [GlobalClass] public partial class WeaponSettings : Resource
+[Tool] 
+[GlobalClass] 
+public partial class WeaponSettings : Resource
 {
     [Export] public string DisplayedWeaponName {get; set;}
     [Export] public PackedScene ProjectileScene {get; set;}
