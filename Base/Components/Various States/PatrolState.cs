@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
+/// <summary>
+/// Выбрать рандомную точку на карте и идти к ней
+/// </summary>
 public partial class PatrolState : LimboState
 {	
 	private NavigationAgent2D navigationAgent2D;

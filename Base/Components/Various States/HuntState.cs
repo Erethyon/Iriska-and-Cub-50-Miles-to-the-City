@@ -3,13 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
+/// <summary>
+/// Идти к <c>NPCAgent.TargetNode</c> и стрелять
+/// </summary>
 public partial class HuntState : LimboState
 {
 	private NavigationAgent2D navigationAgent2D;
 	private VisibleOnScreenNotifier2D visibilityNotifier;
 	private RayCast2D rayCast2D;
 	private NPC NPCAgent;
-	
+	private AnimatedWeapon weaponNode;
 	private bool isRayCastCollidingWithPlayer;
 
 	public override void _Ready()
@@ -19,6 +23,7 @@ public partial class HuntState : LimboState
 		navigationAgent2D = Agent.GetChildren().OfType<NavigationAgent2D>().FirstOrDefault();
 		visibilityNotifier = Agent.GetNode<VisibleOnScreenNotifier2D>("VisibleOnScreenNotifier2D");
 		rayCast2D = Agent.GetNode<RayCast2D>("RayCast2D");
+		weaponNode = Agent.GetChildren().OfType<AnimatedWeapon>().FirstOrDefault();
 		visibilityNotifier.ScreenExited += OnScreenExited;
 	}
 
@@ -65,14 +70,14 @@ public partial class HuntState : LimboState
 		
 		// Gun logic
 		if (isRayCastCollidingWithPlayer){
-			NPCAgent.WeaponNode?.StartShooting();
+			weaponNode?.StartShooting();
 			// point a gun at a target node
-			NPCAgent.WeaponNode?.PointWeaponAt(rayCast2D.GetCollisionPoint());// - NPCAgent.Position;
+			weaponNode?.PointWeaponAt(rayCast2D.GetCollisionPoint());// - NPCAgent.Position;
 		}
 		else{
-			NPCAgent.WeaponNode?.StopShooting();
+			weaponNode?.StopShooting();
 			// point a gun in front of oneself
-			NPCAgent.WeaponNode?.SetFacingDirection(direction);
+			weaponNode?.SetFacingDirection(direction);
 		}
 
     }
