@@ -42,9 +42,6 @@ public partial class HealthComponent : Node2D
         if (node2d is IHealthModifier healthModifier){
             HealthValue += healthModifier.DeltaHealthValue;
         }
-        if (node2d is HealthPickup healthPickup){
-            HealthValue += healthPickup.HealthValue;
-        }
     }
 
     /// <summary>

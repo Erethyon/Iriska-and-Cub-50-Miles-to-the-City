@@ -52,7 +52,7 @@ position = Vector2(20.0341, -3.14961)
 
 [node name="HitBoxComponent" parent="." instance=ExtResource("6_50yk7")]
 collision_layer = 2
-collision_mask = 16
+collision_mask = 48
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
 shape = SubResource("RectangleShape2D_q3pbe")

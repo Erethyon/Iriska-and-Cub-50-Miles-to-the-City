@@ -28,9 +28,9 @@ position = Vector2(38, 277)
 position = Vector2(229, 31)
 
 [node name="HealthPickup" parent="." instance=ExtResource("6_gajlm")]
-position = Vector2(261, 240)
+position = Vector2(66, 262)
 
 [node name="HealthPickup2" parent="." instance=ExtResource("6_gajlm")]
-position = Vector2(294, 256)
+position = Vector2(139, 261)
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

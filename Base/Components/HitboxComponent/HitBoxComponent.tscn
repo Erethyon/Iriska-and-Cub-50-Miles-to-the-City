@@ -3,5 +3,5 @@
 [ext_resource type="Script" path="res://Base/Components/HitboxComponent/HitBoxComponent.cs" id="1_gjjp6"]
 
 [node name="HitBoxComponent" type="Area2D"]
-editor_description = "Template that should be made local in scene with editable children"
+editor_description = "Компонент хитбокса, который отслеживает столкновения с PhysicsBody2D. Просто выставляйте CollisionMask"
 script = ExtResource("1_gjjp6")
