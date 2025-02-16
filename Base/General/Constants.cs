@@ -20,6 +20,7 @@ public static class Constants
 	public const string ZOOM_OUT = "ZoomOut";
 	public const string LEFT_MOUSE_BUTTON = "LMB";
 	public const string RIGHT_MOUSE_BUTTON = "RMB";
+	public const string INTERACT = "Interact";
 
 	// Notifications
 	public const int NC_EXIT_STATE = 5002;

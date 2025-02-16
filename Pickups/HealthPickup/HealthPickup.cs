@@ -8,10 +8,11 @@ using System.Linq;
 /// <i>HealthComponent конечно должен иметь</i> <see cref="HitBoxComponent"/> 
 /// <i>поблизости, который настроен отслеживать правильные</i> <see cref="HitBoxComponent.CollisionMask"/>
 /// </summary>
-public partial class HealthPickup : RigidBody2D, IHealthModifier
+public partial class HealthPickup : RigidBody2D, IHealthModifier, IPickable
 {
 	[Export] private float healthValue;
 	[Export] private AnimationPlayer animationPlayer;
+	[Export] private Node2D sprite;
 
     float IHealthModifier.DeltaHealthValue { 
 	get{
@@ -34,4 +35,14 @@ public partial class HealthPickup : RigidBody2D, IHealthModifier
 		// That's all
 		QueueFree();
 	}
+
+	/// <summary>
+	/// Get bounding rectangle in pixels
+	/// </summary>
+    public Vector2 GetBoundingRect()
+    {
+        Vector2 texSize = (sprite as Sprite2D).Texture.GetSize();
+		Vector2 scale = sprite.Scale;
+		return new(texSize.X * scale.X, texSize.Y * scale.Y);
+    }
 }

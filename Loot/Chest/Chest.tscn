@@ -1,0 +1,77 @@
+[gd_scene load_steps=11 format=3 uid="uid://b7qmcv45ajkwa"]
+
+[ext_resource type="Texture2D" uid="uid://dsbkc7lybtti" path="res://Loot/Chest/ChestSpriteSheet.png" id="1_wm2um"]
+[ext_resource type="Script" path="res://Loot/Chest/Chest.cs" id="2_212d4"]
+[ext_resource type="PackedScene" uid="uid://jmc1qjfmp5kq" path="res://Base/Components/InteractableComponent/InteractableComponent.tscn" id="2_qqcl5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4qxx"]
+atlas = ExtResource("1_wm2um")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpupu"]
+atlas = ExtResource("1_wm2um")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twa8u"]
+atlas = ExtResource("1_wm2um")
+region = Rect2(0, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ybkw"]
+atlas = ExtResource("1_wm2um")
+region = Rect2(0, 96, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ya6xm"]
+atlas = ExtResource("1_wm2um")
+region = Rect2(0, 144, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sfjx6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4qxx")
+}],
+"loop": false,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hpupu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twa8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ybkw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ya6xm")
+}],
+"loop": false,
+"name": &"Open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fwead"]
+size = Vector2(34, 38)
+
+[node name="Chest" type="AnimatedSprite2D"]
+texture_filter = 3
+sprite_frames = SubResource("SpriteFrames_sfjx6")
+animation = &"Idle"
+autoplay = "Idle"
+offset = Vector2(0, -7.265)
+script = ExtResource("2_212d4")
+
+[node name="InteractableComponent" parent="." node_paths=PackedStringArray("mouseCursorArea2D") instance=ExtResource("2_qqcl5")]
+position = Vector2(0, -42)
+mouseCursorArea2D = NodePath("Area2D")
+
+[node name="Area2D" type="Area2D" parent="InteractableComponent"]
+collision_layer = 64
+collision_mask = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent/Area2D"]
+position = Vector2(0, 41)
+shape = SubResource("RectangleShape2D_fwead")
